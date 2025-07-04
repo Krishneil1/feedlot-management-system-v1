@@ -1,0 +1,6 @@
+@FeedlotApi_HostAddress = http://localhost:5282
+
+GET {{FeedlotApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
