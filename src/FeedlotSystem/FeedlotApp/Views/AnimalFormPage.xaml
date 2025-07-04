@@ -1,0 +1,12 @@
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Class="FeedlotApp.Views.AnimalFormPage"
+    Title="Add Animal">
+    <StackLayout Padding="20">
+        <Entry x:Name="TagIdEntry" Placeholder="Tag ID" />
+        <Entry x:Name="BreedEntry" Placeholder="Breed" />
+        <DatePicker x:Name="DobPicker" />
+        <Button Text="Save" Clicked="OnSaveClicked"/>
+    </StackLayout>
+</ContentPage>

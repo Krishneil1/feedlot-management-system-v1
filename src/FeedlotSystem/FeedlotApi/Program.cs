@@ -1,4 +1,22 @@
+// -------------------------------------------------------------------------------------------------
+//
+// Program.cs -- The Program.cs class.
+//
+// Copyright (c) 2025 Krishneel Kumar. All rights reserved.
+//
+// -------------------------------------------------------------------------------------------------
+using FeedlotApi.Persistence;
+using Microsoft.EntityFrameworkCore;
+
+
 var builder = WebApplication.CreateBuilder(args);
+
+// EF Core
+builder.Services.AddDbContext<FeedlotDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString")));
+
+// MediatR
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
 // Add services to the container.
 
