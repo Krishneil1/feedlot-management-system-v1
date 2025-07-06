@@ -16,15 +16,5 @@ public partial class DashboardPage : ContentPage
     public DashboardPage()
     {
         InitializeComponent();
-        LoadData();
-    }
-
-    private async void LoadData()
-    {
-        var animals = await App.FLDatabase.GetAllAnimalsAsync();
-        var bookings = await App.FLDatabase.GetAllBookingsAsync();
-
-        AnimalCountLabel.Text = $"Animals: {animals.Count}";
-        BookingCountLabel.Text = $"Bookings: {bookings.Count}";
     }
 }
