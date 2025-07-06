@@ -25,7 +25,8 @@ public class MappingProfile : Profile
 
         CreateMap<BookingDto, Booking>()
             .ForMember(dest => dest.Id, opt => opt.Ignore())
-            .ForMember(dest => dest.Animals, opt => opt.Ignore());
+            .ForMember(dest => dest.Animals, opt => opt.Ignore())
+            .ForMember(dest => dest.PublicId, opt => opt.MapFrom(src => src.PublicId));
         CreateMap<Booking, BookingDto>();
 
         // ✅ Command → DTO (used in CreateBookingCommandHandler)

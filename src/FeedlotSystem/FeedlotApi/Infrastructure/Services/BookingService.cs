@@ -74,5 +74,27 @@ public class BookingService : IBookingService
         _context.Bookings.Remove(booking);
         await _context.SaveChangesAsync(cancellationToken);
     }
+    public async Task<Booking?> GetBookingByPublicIdAsync(Guid publicId, CancellationToken cancellationToken)
+    {
+        return await _context.Bookings
+            .Include(b => b.Animals)
+            .FirstOrDefaultAsync(b => b.PublicId == publicId, cancellationToken);
+    }
+
+    public async Task UpdateBookingByPublicIdAsync(Guid publicId, BookingDto dto, CancellationToken cancellationToken)
+    {
+        var existing = await _context.Bookings
+            .Include(b => b.Animals)
+            .FirstOrDefaultAsync(b => b.PublicId == publicId, cancellationToken);
+
+        if (existing == null)
+            throw new KeyNotFoundException();
+
+        _mapper.Map(dto, existing);
+        _context.Animals.RemoveRange(existing.Animals);
+        existing.Animals = _mapper.Map<List<Animal>>(dto.Animals);
+
+        await _context.SaveChangesAsync(cancellationToken);
+    }
 
 }

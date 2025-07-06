@@ -30,4 +30,5 @@ public class Booking : ISyncable
     public string? Notes { get; set; }
 
     public bool Synced { get; set; } = false;
+    public Guid PublicId { get; set; } = Guid.NewGuid(); 
 }

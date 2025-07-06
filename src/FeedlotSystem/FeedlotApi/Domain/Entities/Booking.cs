@@ -18,6 +18,7 @@ public class Booking
     public string TruckReg { get; set; } = string.Empty;
     public string Status { get; set; } = "Pending";
     public string? Notes { get; set; }
+    public Guid PublicId { get; set; } = Guid.NewGuid(); 
 
     public List<Animal> Animals { get; set; } = new();
 }

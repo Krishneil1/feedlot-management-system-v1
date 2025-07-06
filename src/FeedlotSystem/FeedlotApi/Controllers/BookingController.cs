@@ -6,6 +6,7 @@
 
 using FeedlotApi.Application.Commands;
 using FeedlotApi.Application.Queries;
+using FeedlotApi.Domain.DTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -138,4 +139,52 @@ public class BookingController : ControllerBase
             return StatusCode(500, "An error occurred while deleting the booking.");
         }
     }
+    [HttpGet("by-public-id/{publicId:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> GetByPublicId(Guid publicId)
+    {
+        try
+        {
+            var result = await _mediator.Send(new GetBookingByPublicIdQuery(publicId));
+            if (result == null)
+            {
+                _logger.LogWarning("Booking not found for PublicId: {PublicId}", publicId);
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error retrieving booking by PublicId: {PublicId}", publicId);
+            return StatusCode(500, "An error occurred while retrieving the booking.");
+        }
+    }
+
+    [HttpPut("{publicId:guid}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> UpdateByPublicId(Guid publicId, [FromBody] BookingDto dto)
+    {
+        try
+        {
+            await _mediator.Send(new UpdateBookingByPublicIdCommand { PublicId = publicId, Booking = dto });
+            _logger.LogInformation("Updated booking with PublicId: {PublicId}", publicId);
+            return NoContent();
+        }
+        catch (KeyNotFoundException)
+        {
+            _logger.LogWarning("Booking with PublicId {PublicId} not found.", publicId);
+            return NotFound();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error updating booking with PublicId: {PublicId}", publicId);
+            return StatusCode(500, "An error occurred while updating the booking.");
+        }
+    }
+
 }

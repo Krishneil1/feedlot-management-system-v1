@@ -59,6 +59,7 @@ public class FeedlotDbContext : DbContext
             entity.Property(b => b.Property).HasMaxLength(100);
             entity.Property(b => b.TruckReg).HasMaxLength(50);
             entity.Property(b => b.Status).HasMaxLength(50);
+            entity.HasIndex(b => b.PublicId).IsUnique();
         });
 
         modelBuilder.Entity<Animal>()

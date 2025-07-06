@@ -31,6 +31,7 @@ public partial class App : Application
         );
         FLDatabase = new FLDatabase(dbPath);
 
+
         LoadAppSettings();
         var syncService = new SyncService();
         _backgroundSync = new BackgroundSyncTask(syncService);

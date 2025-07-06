@@ -17,5 +17,7 @@ public class BookingDto
     public string TruckReg { get; set; } = string.Empty;
     public string Status { get; set; } = "Pending";
     public string? Notes { get; set; }
+
+    public Guid PublicId { get; set; }
     public List<AnimalDto> Animals { get; set; } = new();
 }

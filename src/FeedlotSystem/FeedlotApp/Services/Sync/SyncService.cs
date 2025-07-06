@@ -53,7 +53,14 @@ public class SyncService : ISyncService
         {
             try
             {
-                // Wrap the booking in a "booking" property
+                // Assign a new PublicId if not already set
+                if (booking.PublicId == Guid.Empty)
+                {
+                    booking.PublicId = Guid.NewGuid();
+                    await db.UpdateBookingAsync(booking); // persist the new ID locally
+                }
+
+                // Prepare payload with all values
                 var payload = new
                 {
                     booking = new
@@ -65,20 +72,36 @@ public class SyncService : ISyncService
                         booking.TruckReg,
                         booking.Status,
                         booking.Notes,
-                        animals = new List<object>() // no animals linked locally
+                        publicId = booking.PublicId,
+                        animals = new List<object>() // extend with animal data if needed
                     }
                 };
 
-                string json = JsonSerializer.Serialize(payload, new JsonSerializerOptions
+                var json = JsonSerializer.Serialize(payload, new JsonSerializerOptions
                 {
                     PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                     WriteIndented = false
                 });
 
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
-                var response = await _httpClient.PostAsync($"{_baseUrl}/api/booking", content);
 
-                if (response.IsSuccessStatusCode)
+                // Check if the booking already exists in the backend
+                var checkResponse = await _httpClient.GetAsync($"{_baseUrl}/api/booking/by-public-id/{booking.PublicId}");
+
+                HttpResponseMessage syncResponse;
+
+                if (checkResponse.IsSuccessStatusCode)
+                {
+                    // Use PUT to update
+                    syncResponse = await _httpClient.PutAsync($"{_baseUrl}/api/booking/{booking.PublicId}", content);
+                }
+                else
+                {
+                    // Use POST to create
+                    syncResponse = await _httpClient.PostAsync($"{_baseUrl}/api/booking", content);
+                }
+
+                if (syncResponse.IsSuccessStatusCode)
                 {
                     booking.Synced = true;
                     await db.UpdateBookingAsync(booking);
@@ -86,7 +109,7 @@ public class SyncService : ISyncService
                 }
                 else
                 {
-                    System.Diagnostics.Debug.WriteLine($"[Sync Failed] Booking {booking.BookingNumber}, Status: {response.StatusCode}");
+                    System.Diagnostics.Debug.WriteLine($"[Sync Failed] Booking {booking.BookingNumber}, Status: {syncResponse.StatusCode}");
                 }
             }
             catch (Exception ex)
@@ -95,6 +118,7 @@ public class SyncService : ISyncService
             }
         }
     }
+
 
     private async Task SyncEntitiesAsync<T>(
         IEnumerable<T> items,

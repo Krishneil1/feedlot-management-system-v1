@@ -14,7 +14,7 @@ using FeedlotApp.Services.Sync;
 public class BackgroundSyncTask
 {
     private readonly SyncService _syncService;
-    private readonly TimeSpan _interval = TimeSpan.FromMinutes(2); // Adjust as needed
+    private readonly TimeSpan _interval = TimeSpan.FromMinutes(1); // Adjust as needed
     private CancellationTokenSource? _cts;
 
     public BackgroundSyncTask(SyncService syncService)
