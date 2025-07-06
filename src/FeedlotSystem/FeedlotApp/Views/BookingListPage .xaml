@@ -3,7 +3,7 @@
              x:Class="FeedlotApp.Views.BookingListPage"
              Title="All Bookings">
 
-    <StackLayout Padding="10">
+    <Grid Padding="10">
         <CollectionView x:Name="BookingCollectionView"
                         SelectionMode="None">
             <CollectionView.ItemTemplate>
@@ -30,5 +30,5 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-    </StackLayout>
+    </Grid>
 </ContentPage>
