@@ -1,3 +1,10 @@
+// -------------------------------------------------------------------------------------------------
+//
+// SyncService.cs -- Handles syncing Animal and Booking data to API without posting Ids.
+//
+// Copyright (c) 2025 Krishneel Kumar. All rights reserved.
+//
+// -------------------------------------------------------------------------------------------------
 
 using System.Text;
 using System.Text.Json;
@@ -42,9 +49,54 @@ public class SyncService : ISyncService
             return;
         }
 
-        await SyncEntitiesAsync(unsyncedBookings, $"{_baseUrl}/api/booking", async b => await db.UpdateBookingAsync(b));
-    }
+        foreach (var booking in unsyncedBookings)
+        {
+            try
+            {
+                // Wrap the booking in a "booking" property
+                var payload = new
+                {
+                    booking = new
+                    {
+                        booking.BookingNumber,
+                        booking.BookingDate,
+                        booking.VendorName,
+                        booking.Property,
+                        booking.TruckReg,
+                        booking.Status,
+                        booking.Notes,
+                        animals = new List<object>() // no animals linked locally
+                    }
+                };
 
+                string json = JsonSerializer.Serialize(payload, new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                    WriteIndented = false
+                });
+
+                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync($"{_baseUrl}/api/booking", content);
+
+                Console.WriteLine("[POST BODY] " + json);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    booking.Synced = true;
+                    await db.UpdateBookingAsync(booking);
+                    System.Diagnostics.Debug.WriteLine($"[Sync OK] Booking {booking.BookingNumber}");
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine($"[Sync Failed] Booking {booking.BookingNumber}, Status: {response.StatusCode}");
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"[Sync Error] Booking {booking.BookingNumber}, Error: {ex.Message}");
+            }
+        }
+    }
 
     private async Task SyncEntitiesAsync<T>(
         IEnumerable<T> items,
@@ -64,6 +116,7 @@ public class SyncService : ISyncService
 
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await _httpClient.PostAsync(endpoint, content);
+
                 Console.WriteLine("[POST BODY] " + json);
 
                 if (response.IsSuccessStatusCode)
@@ -84,3 +137,4 @@ public class SyncService : ISyncService
         }
     }
 }
+
