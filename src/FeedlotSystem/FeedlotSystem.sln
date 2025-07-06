@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36212.18 d17.14
+VisualStudioVersion = 17.14.36212.18
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeedlotApp", "FeedlotApp\FeedlotApp.csproj", "{AEC99E8F-7971-442A-945B-2B795CDC95F6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeedlotApi", "FeedlotApi\FeedlotApi.csproj", "{B7B740BA-95A7-401C-9C89-CB9756141FC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FeedlotApiTests", "FeedlotApiTests\FeedlotApiTests.csproj", "{A7D65023-E39B-45BB-A1AD-89E68CEC2053}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,6 +25,10 @@ Global
 		{B7B740BA-95A7-401C-9C89-CB9756141FC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7B740BA-95A7-401C-9C89-CB9756141FC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7B740BA-95A7-401C-9C89-CB9756141FC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7D65023-E39B-45BB-A1AD-89E68CEC2053}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7D65023-E39B-45BB-A1AD-89E68CEC2053}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7D65023-E39B-45BB-A1AD-89E68CEC2053}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7D65023-E39B-45BB-A1AD-89E68CEC2053}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
