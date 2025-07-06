@@ -10,16 +10,16 @@ namespace FeedlotApi.Application.Handlers;
 
 using FeedlotApi.Application.Commands;
 using FeedlotApi.Domain.Entities;
-using FeedlotApi.Persistence;
 using MediatR;
+using FeedlotApi.Application.IAnimalService;
 
 public class AddAnimalCommandHandler : IRequestHandler<AddAnimalCommand, int>
 {
-    private readonly FeedlotDbContext _context;
+    private readonly IAnimalService _animalService;
 
-    public AddAnimalCommandHandler(FeedlotDbContext context)
+    public AddAnimalCommandHandler(IAnimalService animalService)
     {
-        _context = context;
+        _animalService = animalService;
     }
 
     public async Task<int> Handle(AddAnimalCommand request, CancellationToken cancellationToken)
@@ -32,9 +32,6 @@ public class AddAnimalCommandHandler : IRequestHandler<AddAnimalCommand, int>
             Synced = true
         };
 
-        _context.Animals.Add(animal);
-        await _context.SaveChangesAsync(cancellationToken);
-
-        return animal.Id;
+        return await _animalService.AddAnimalAsync(animal, cancellationToken);
     }
 }

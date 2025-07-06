@@ -1,33 +1,36 @@
 // -------------------------------------------------------------------------------------------------
-//
 // Program.cs -- The Program.cs class.
-//
-// Copyright (c) 2025 Krishneel Kumar. All rights reserved.
-//
 // -------------------------------------------------------------------------------------------------
-using FeedlotApi.Persistence;
+
+using FeedlotApi.Application.IAnimalService;
+using FeedlotApi.Infrastructure.Services;
+using FeedlotApi.Data;
 using Microsoft.EntityFrameworkCore;
 
-
 var builder = WebApplication.CreateBuilder(args);
-
-// EF Core
-builder.Services.AddDbContext<FeedlotDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString")));
-
 // MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
-// Add services to the container.
-
+// EF Core
+builder.Services.AddDbContext<FeedlotDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+);
+// Add services
+builder.Services.AddScoped<IAnimalService, AnimalService>();
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// ✅ Auto-run migrations at startup
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<FeedlotDbContext>();
+    db.Database.Migrate();
+}
+
+// Swagger in dev
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -35,9 +38,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();

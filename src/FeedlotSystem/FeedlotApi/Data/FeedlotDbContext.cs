@@ -2,19 +2,16 @@
 // FeedlotDbContext.cs -- The FeedlotDbContext.cs class.
 // -------------------------------------------------------------------------------------------------
 
-namespace FeedlotApi.Persistence;
+namespace FeedlotApi.Data;
 
 using FeedlotApi.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 public class FeedlotDbContext : DbContext
 {
-    private readonly IHttpContextAccessor httpContextAccessor;
-
-    public FeedlotDbContext(DbContextOptions<FeedlotDbContext> options, IHttpContextAccessor httpContextAccessor)
+    public FeedlotDbContext(DbContextOptions<FeedlotDbContext> options)
         : base(options)
     {
-        this.httpContextAccessor = httpContextAccessor;
 
         if (Database.IsRelational() && Database.GetPendingMigrations().Any())
         {
