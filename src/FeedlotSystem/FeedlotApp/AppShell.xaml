@@ -1,15 +1,20 @@
-<?xml version="1.0" encoding="UTF-8" ?>
 <Shell
     x:Class="FeedlotApp.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:FeedlotApp"
-    Shell.FlyoutBehavior="Disabled"
+    xmlns:views="clr-namespace:FeedlotApp.Views"
+    Shell.FlyoutBehavior="Flyout"
     Title="FeedlotApp">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <FlyoutItem Title="Dashboard" Route="DashboardPage">
+        <ShellContent ContentTemplate="{DataTemplate views:DashboardPage}" />
+    </FlyoutItem>
 
+    <FlyoutItem Title="Animals" Route="AnimalFormPage">
+        <ShellContent ContentTemplate="{DataTemplate views:AnimalFormPage}" />
+    </FlyoutItem>
+
+    <FlyoutItem Title="Bookings" Route="BookingFormPage">
+        <ShellContent ContentTemplate="{DataTemplate views:BookingFormPage}" />
+    </FlyoutItem>
 </Shell>

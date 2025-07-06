@@ -1,12 +1,25 @@
-<ContentPage 
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
     x:Class="FeedlotApp.Views.AnimalFormPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:sys="clr-namespace:System;assembly=netstandard"
     Title="Add Animal">
-    <StackLayout Padding="20">
-        <Entry x:Name="TagIdEntry" Placeholder="Tag ID" />
-        <Entry x:Name="BreedEntry" Placeholder="Breed" />
-        <DatePicker x:Name="DobPicker" />
-        <Button Text="Save" Clicked="OnSaveClicked"/>
-    </StackLayout>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <Label Text="Tag ID" FontSize="Medium" />
+            <Entry x:Name="TagIdEntry" Placeholder="Enter tag ID" />
+
+            <Label Text="Breed" FontSize="Medium" />
+            <Entry x:Name="BreedEntry" Placeholder="Enter breed" />
+
+            <Label Text="Date of Birth" FontSize="Medium" />
+            <DatePicker x:Name="DobPicker" MaximumDate="{x:Static sys:DateTime.Today}" />
+
+            <Button Text="Save" Clicked="OnSaveClicked" BackgroundColor="#5A31F4" TextColor="White" CornerRadius="8" />
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

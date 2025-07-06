@@ -1,0 +1,14 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FeedlotApp.Views.BookingFormPage"
+             Title="Add Booking">
+    <StackLayout Padding="20" Spacing="15">
+        <Label Text="Booking Reference" FontAttributes="Bold" />
+        <Entry x:Name="BookingReferenceEntry" Placeholder="Enter reference" />
+
+        <Label Text="Booking Date" FontAttributes="Bold" />
+        <DatePicker x:Name="BookingDatePicker" />
+
+        <Button Text="Save Booking" Clicked="OnSaveBookingClicked" />
+    </StackLayout>
+</ContentPage>

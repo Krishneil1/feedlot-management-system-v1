@@ -1,3 +1,11 @@
+// -------------------------------------------------------------------------------------------------
+//
+// App.cs -- The App.cs class.
+//
+// Copyright (c) 2025 Krishneel Kumar. All rights reserved.
+//
+// -------------------------------------------------------------------------------------------------
+
 using FeedlotApp.Data;
 using FeedlotApp.Sync;
 using FeedlotApp.Views;
@@ -16,7 +24,7 @@ public partial class App : Application
         string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "animal.db3");
         FLDatabase = new FLDatabase(dbPath);
 
-        MainPage = new NavigationPage(new AnimalFormPage());
+        MainPage = new AppShell();
 
         // 🔄 Sync on connectivity change
         Connectivity.ConnectivityChanged += async (s, e) =>

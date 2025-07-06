@@ -8,7 +8,7 @@ namespace FeedlotApp.Sync;
 public class SyncService
 {
     private readonly HttpClient _httpClient;
-    private const string ApiUrl = "http://localhost:32656/api/animal";
+    private const string ApiUrl = "http://192.168.68.100:5282/api/animal";
 
     public SyncService()
     {

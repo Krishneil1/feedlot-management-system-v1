@@ -25,6 +25,7 @@ public class FLDatabase
         try
         {
             await _database.CreateTableAsync<Animal>();
+            await _database.CreateTableAsync<Booking>();
         }
         catch (Exception ex)
         {
@@ -47,4 +48,10 @@ public class FLDatabase
 
     public Task<int> DeleteAnimalAsync(Animal animal) =>
         _database.DeleteAsync(animal);
+
+    public Task<List<Booking>> GetAllBookingsAsync() =>
+    _database.Table<Booking>().ToListAsync();
+
+    public Task<int> SaveBookingAsync(Booking booking) =>
+        _database.InsertAsync(booking);
 }

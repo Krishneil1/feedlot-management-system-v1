@@ -1,18 +1,21 @@
 // -------------------------------------------------------------------------------------------------
 //
-// AppShell.cs -- The AppShell.cs class.
+// Booking.cs -- The Booking.cs class.
 //
 // Copyright (c) 2025 Krishneel Kumar. All rights reserved.
 //
 // -------------------------------------------------------------------------------------------------
 
-namespace FeedlotApp
+namespace FeedlotApp.Models;
+
+using SQLite;
+
+public class Booking
 {
-    public partial class AppShell : Shell
-    {
-        public AppShell()
-        {
-            InitializeComponent();
-        }
-    }
+    [PrimaryKey, AutoIncrement]
+    public int Id { get; set; }
+
+    public string Reference { get; set; }
+
+    public DateTime Date { get; set; }
 }

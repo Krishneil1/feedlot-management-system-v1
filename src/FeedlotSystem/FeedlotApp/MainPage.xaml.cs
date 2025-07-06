@@ -1,4 +1,12 @@
-﻿namespace FeedlotApp
+// -------------------------------------------------------------------------------------------------
+//
+// MainPage.cs -- The MainPage.cs class.
+//
+// Copyright (c) 2025 Krishneel Kumar. All rights reserved.
+//
+// -------------------------------------------------------------------------------------------------
+
+namespace FeedlotApp
 {
     public partial class MainPage : ContentPage
     {
