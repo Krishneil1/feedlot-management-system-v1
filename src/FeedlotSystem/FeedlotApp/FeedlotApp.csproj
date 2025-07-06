@@ -78,7 +78,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Views\BookingListPage .xaml.cs">
+	    <DependentUpon>BookingListPage .xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="Views\AnimalFormPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\BookingListPage .xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\BookingFormPage.xaml">

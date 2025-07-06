@@ -1,0 +1,24 @@
+<!-- Views/BookingListPage.xaml -->
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FeedlotApp.Views.BookingListPage"
+             Title="All Bookings">
+    <StackLayout Padding="10">
+        <CollectionView x:Name="BookingCollectionView">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame BorderColor="Gray" CornerRadius="10" Padding="10" Margin="5">
+                        <StackLayout>
+                            <Label Text="{Binding BookingNumber}" FontAttributes="Bold" />
+                            <Label Text="{Binding VendorName}" />
+                            <Label Text="{Binding Property}" />
+                            <Label Text="{Binding BookingDate, StringFormat='Date: {0:dd MMM yyyy}'}" />
+                            <Label Text="{Binding TruckReg, StringFormat='Truck: {0}'}" />
+                            <Label Text="{Binding Status}" />
+                        </StackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+</ContentPage>
