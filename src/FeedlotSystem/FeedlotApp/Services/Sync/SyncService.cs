@@ -21,6 +21,13 @@ public class SyncService : ISyncService
     {
         var db = App.FLDatabase;
         var unsyncedAnimals = await db.GetUnsyncedAnimalsAsync();
+
+        if (!unsyncedAnimals.Any())
+        {
+            System.Diagnostics.Debug.WriteLine("[Sync] No unsynced animals to send.");
+            return;
+        }
+
         await SyncEntitiesAsync(unsyncedAnimals, $"{_baseUrl}/api/animal", async a => await db.UpdateAnimalAsync(a));
     }
 
@@ -28,8 +35,16 @@ public class SyncService : ISyncService
     {
         var db = App.FLDatabase;
         var unsyncedBookings = await db.GetUnsyncedBookingsAsync();
+
+        if (!unsyncedBookings.Any())
+        {
+            System.Diagnostics.Debug.WriteLine("[Sync] No unsynced bookings to send.");
+            return;
+        }
+
         await SyncEntitiesAsync(unsyncedBookings, $"{_baseUrl}/api/booking", async b => await db.UpdateBookingAsync(b));
     }
+
 
     private async Task SyncEntitiesAsync<T>(
         IEnumerable<T> items,
@@ -49,6 +64,7 @@ public class SyncService : ISyncService
 
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await _httpClient.PostAsync(endpoint, content);
+                Console.WriteLine("[POST BODY] " + json);
 
                 if (response.IsSuccessStatusCode)
                 {

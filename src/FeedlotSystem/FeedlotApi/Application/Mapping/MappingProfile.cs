@@ -19,7 +19,9 @@ public class MappingProfile : Profile
     {
         // DTO ↔ Entity
         CreateMap<AnimalDto, Animal>()
-            .ForMember(dest => dest.Id, opt => opt.Ignore());
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ForMember(dest => dest.Booking, opt => opt.Ignore());
+        CreateMap<Animal, AnimalDto>();
 
         CreateMap<BookingDto, Booking>()
             .ForMember(dest => dest.Id, opt => opt.Ignore())
