@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <Shell
     x:Class="FeedlotApp.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -13,14 +12,20 @@
         <ShellContent ContentTemplate="{DataTemplate local:DashboardPage}" />
     </FlyoutItem>
 
-    <FlyoutItem Title="Animals" Icon="animal.png" Route="AnimalFormPage">
-        <ShellContent ContentTemplate="{DataTemplate local:AnimalFormPage}" />
-    </FlyoutItem>
-
-    <FlyoutItem Title="Bookings" Icon="booking.png" Route="BookingFormPage">
+    <!-- Disabled visual only -->
+    <FlyoutItem Title="Add Bookings" Icon="booking.png" Route="BookingFormPage">
         <ShellContent ContentTemplate="{DataTemplate local:BookingFormPage}" />
     </FlyoutItem>
-    <FlyoutItem Title="All Bookings" Icon="bookings_list.png" Route="BookingListPage">
+
+    <FlyoutItem Title="All Bookings" Route="BookingListPage">
+        <FlyoutItem.FlyoutIcon>
+            <FontImageSource FontFamily="BootstrapIcons" Glyph="&#xf46c;" Color="Black" Size="22" />
+        </FlyoutItem.FlyoutIcon>
         <ShellContent ContentTemplate="{DataTemplate local:BookingListPage}" />
     </FlyoutItem>
+    <FlyoutItem Title="Add Animals (Disabled)" Icon="animal_disabled.png">
+        <ShellContent ContentTemplate="{DataTemplate local:ComingSoonPage}" />
+    </FlyoutItem>
+
+
 </Shell>
