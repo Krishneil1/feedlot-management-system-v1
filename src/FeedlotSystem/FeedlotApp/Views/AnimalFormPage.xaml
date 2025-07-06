@@ -3,7 +3,6 @@
     x:Class="FeedlotApp.Views.AnimalFormPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:sys="clr-namespace:System;assembly=netstandard"
     Title="Add Animal">
 
     <ScrollView>
@@ -16,10 +15,14 @@
             <Entry x:Name="BreedEntry" Placeholder="Enter breed" />
 
             <Label Text="Date of Birth" FontSize="Medium" />
-            <DatePicker x:Name="DobPicker" MaximumDate="{x:Static sys:DateTime.Today}" />
+            <DatePicker x:Name="DobPicker" />
 
-            <Button Text="Save" Clicked="OnSaveClicked" BackgroundColor="#5A31F4" TextColor="White" CornerRadius="8" />
-
+            <Button 
+                Text="Save" 
+                Clicked="OnSaveClicked" 
+                BackgroundColor="#097969" 
+                TextColor="White" 
+                CornerRadius="8" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

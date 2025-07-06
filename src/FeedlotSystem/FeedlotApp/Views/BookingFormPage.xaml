@@ -2,13 +2,30 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FeedlotApp.Views.BookingFormPage"
              Title="Add Booking">
-    <StackLayout Padding="20" Spacing="15">
-        <Label Text="Booking Reference" FontAttributes="Bold" />
-        <Entry x:Name="BookingReferenceEntry" Placeholder="Enter reference" />
 
-        <Label Text="Booking Date" FontAttributes="Bold" />
-        <DatePicker x:Name="BookingDatePicker" />
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
 
-        <Button Text="Save Booking" Clicked="OnSaveBookingClicked" />
-    </StackLayout>
+            <Label Text="Booking Number" />
+            <Entry x:Name="BookingReferenceEntry" Placeholder="e.g., BK-1234" />
+
+            <Label Text="Booking Date" />
+            <DatePicker x:Name="BookingDatePicker" />
+
+            <Label Text="Vendor Name" />
+            <Entry x:Name="VendorEntry" Placeholder="e.g., JBS" />
+
+            <Label Text="Property" />
+            <Entry x:Name="PropertyEntry" Placeholder="e.g., Wetherby Ranch" />
+
+            <Label Text="Truck Reg" />
+            <Entry x:Name="TruckRegEntry" Placeholder="e.g., ABC-123" />
+
+            <Label Text="Notes" />
+            <Editor x:Name="NotesEditor" AutoSize="TextChanges" Placeholder="Optional notes..." />
+
+            <Button Text="Save Booking" Clicked="OnSaveBookingClicked" />
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

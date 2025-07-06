@@ -13,6 +13,7 @@ public partial class AnimalFormPage : ContentPage
     public AnimalFormPage()
     {
         InitializeComponent();
+        DobPicker.MaximumDate = DateTime.Today;
     }
 
     private async void OnSaveClicked(object sender, EventArgs e)
@@ -24,8 +25,6 @@ public partial class AnimalFormPage : ContentPage
             DateOfBirth = DobPicker.Date,
             Synced = false
         };
-
-        await App.Current.MainPage.DisplayAlert("Saving", "Saving animal...", "OK");
 
         await App.FLDatabase.SaveAnimalAsync(animal);
 

@@ -13,14 +13,24 @@ namespace FeedlotApp.Views
         {
             var booking = new Booking
             {
-                Reference = BookingReferenceEntry.Text,
-                Date = BookingDatePicker.Date
+                BookingNumber = BookingReferenceEntry.Text,
+                BookingDate = BookingDatePicker.Date,
+                VendorName = VendorEntry.Text,
+                Property = PropertyEntry.Text,
+                TruckReg = TruckRegEntry.Text,
+                Notes = NotesEditor.Text,
+                Status = "Pending",
+                Synced = false
             };
 
             await App.FLDatabase.SaveBookingAsync(booking);
             await DisplayAlert("Saved", "Booking saved locally.", "OK");
 
             BookingReferenceEntry.Text = string.Empty;
+            VendorEntry.Text = string.Empty;
+            PropertyEntry.Text = string.Empty;
+            TruckRegEntry.Text = string.Empty;
+            NotesEditor.Text = string.Empty;
             BookingDatePicker.Date = DateTime.Today;
         }
     }

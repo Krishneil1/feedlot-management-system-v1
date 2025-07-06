@@ -54,4 +54,9 @@ public class FLDatabase
 
     public Task<int> SaveBookingAsync(Booking booking) =>
         _database.InsertAsync(booking);
+    public Task<List<Booking>> GetUnsyncedBookingsAsync() =>
+    _database.Table<Booking>().Where(b => !b.Synced).ToListAsync();
+
+    public Task<int> UpdateBookingAsync(Booking booking) =>
+        _database.UpdateAsync(booking);
 }
