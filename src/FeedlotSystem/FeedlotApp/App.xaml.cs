@@ -9,15 +9,16 @@
 using System.Text.Json;
 using FeedlotApp.Data;
 using FeedlotApp.Models;
+using FeedlotApp.Services;
 using FeedlotApp.Services.Sync;
 
 namespace FeedlotApp;
 
 public partial class App : Application
 {
-    public static FLDatabase FLDatabase { get; private set; }
-    public static AppSettings Settings { get; private set; }
-
+    public static FLDatabase? FLDatabase { get; private set; }
+    public static AppSettings? Settings { get; private set; }
+    private static BackgroundSyncTask? _backgroundSync;
     private static bool _isSyncing = false;
 
     public App()
@@ -31,6 +32,9 @@ public partial class App : Application
         FLDatabase = new FLDatabase(dbPath);
 
         LoadAppSettings();
+        var syncService = new SyncService();
+        _backgroundSync = new BackgroundSyncTask(syncService);
+        _backgroundSync.Start();
 
         MainPage = new AppShell();
 
@@ -112,5 +116,10 @@ public partial class App : Application
         {
             Settings = new AppSettings(); // fallback default
         }
+    }
+    protected override void CleanUp()
+    {
+        _backgroundSync?.Stop();
+        base.CleanUp();
     }
 }

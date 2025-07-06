@@ -27,7 +27,7 @@ public class CreateBookingCommandHandler : IRequestHandler<CreateBookingCommand,
 
     public async Task<int> Handle(CreateBookingCommand request, CancellationToken cancellationToken)
     {
-        var bookingDto = _mapper.Map<BookingDto>(request);
+        var bookingDto = _mapper.Map<BookingDto>(request.Booking);
 
         // Optional: ensure synced flags
         bookingDto.Status = "Pending";

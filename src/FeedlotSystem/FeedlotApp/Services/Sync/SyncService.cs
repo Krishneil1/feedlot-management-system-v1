@@ -78,8 +78,6 @@ public class SyncService : ISyncService
                 var content = new StringContent(json, Encoding.UTF8, "application/json");
                 var response = await _httpClient.PostAsync($"{_baseUrl}/api/booking", content);
 
-                Console.WriteLine("[POST BODY] " + json);
-
                 if (response.IsSuccessStatusCode)
                 {
                     booking.Synced = true;
