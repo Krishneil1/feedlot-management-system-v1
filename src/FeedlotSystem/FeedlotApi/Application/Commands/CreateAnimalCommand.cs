@@ -8,11 +8,10 @@
 
 namespace FeedlotApi.Application.Commands;
 
+using FeedlotApi.Domain.DTOs;
 using MediatR;
 
-public class AddAnimalCommand : IRequest<int>
+public class CreateAnimalCommand : IRequest<int>
 {
-    public string TagId { get; set; } = string.Empty;
-    public string Breed { get; set; } = string.Empty;
-    public DateTime DateOfBirth { get; set; }
+    public AnimalDto AnimalDto { get; set; } = null!; 
 }

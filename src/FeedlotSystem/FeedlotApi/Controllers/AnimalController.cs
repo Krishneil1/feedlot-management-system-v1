@@ -98,7 +98,7 @@ public class AnimalController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<IActionResult> AddAnimal([FromBody] AddAnimalCommand command)
+    public async Task<IActionResult> AddAnimal([FromBody] CreateAnimalCommand command)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);

@@ -33,11 +33,11 @@ public class AnimalService : IAnimalService
     }
     public async Task<List<Animal>> GetAllAnimalsAsync(CancellationToken cancellationToken)
     {
-        return await _context.Animals.ToListAsync(cancellationToken);
+        return await _context.Animals.Include(a => a.Booking).ToListAsync(cancellationToken);
     }
     public async Task<Animal> GetAnimalByIdAsync(int id, CancellationToken cancellationToken)
     {
-        return await _context.Animals.FindAsync(new object[] { id }, cancellationToken);
+        return await _context.Animals.Include(a => a.Booking).FirstOrDefaultAsync(a => a.Id == id, cancellationToken);
     }
     public async Task UpdateAnimalAsync(int id, AnimalDto dto, CancellationToken cancellationToken)
     {

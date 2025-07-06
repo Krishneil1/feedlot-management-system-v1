@@ -9,6 +9,7 @@
 namespace FeedlotApi.Application.Mapping;
 
 using AutoMapper;
+using FeedlotApi.Application.Commands;
 using FeedlotApi.Domain.DTOs;
 using FeedlotApi.Domain.Entities;
 
@@ -16,12 +17,19 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
+        // DTO ↔ Entity
         CreateMap<AnimalDto, Animal>()
-            .ForMember(dest => dest.Id, opt => opt.Ignore()); // avoid overwriting IDs on update
+            .ForMember(dest => dest.Id, opt => opt.Ignore());
 
         CreateMap<BookingDto, Booking>()
-            .ForMember(dest => dest.Id, opt => opt.Ignore()) // don't map IDs
-            .ForMember(dest => dest.Animals, opt => opt.Ignore()); // handle manually
+            .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ForMember(dest => dest.Animals, opt => opt.Ignore());
+        CreateMap<Booking, BookingDto>();
 
+        // ✅ Command → DTO (used in CreateBookingCommandHandler)
+        CreateMap<CreateBookingCommand, BookingDto>()
+            .ForMember(dest => dest.Animals, opt => opt.MapFrom(src => src.Booking.Animals));
+
+        CreateMap<AnimalDto, Animal>(); // in case AnimalDto is used deeper
     }
 }

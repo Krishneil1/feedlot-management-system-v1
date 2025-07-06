@@ -12,6 +12,7 @@ public class AnimalDto
 {
     public string TagId { get; set; } = string.Empty;
     public string Breed { get; set; } = string.Empty;
+    public int BookingId { get; set; }
     public DateTime DateOfBirth { get; set; }
 }
 
