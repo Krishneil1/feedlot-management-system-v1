@@ -50,5 +50,14 @@ public class AnimalService : IAnimalService
 
         await _context.SaveChangesAsync(cancellationToken);
     }
+    // AnimalService.cs
+    public async Task DeleteAnimalAsync(int id, CancellationToken cancellationToken)
+    {
+        var animal = await _context.Animals.FindAsync(new object[] { id }, cancellationToken);
+        if (animal == null)
+            throw new KeyNotFoundException($"Animal ID {id} not found.");
 
+        _context.Animals.Remove(animal);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
 }

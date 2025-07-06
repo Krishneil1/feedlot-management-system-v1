@@ -65,4 +65,14 @@ public class BookingService : IBookingService
 
         await _context.SaveChangesAsync(cancellationToken);
     }
+    public async Task DeleteBookingAsync(int id, CancellationToken cancellationToken)
+    {
+        var booking = await _context.Bookings.FindAsync(new object[] { id }, cancellationToken);
+        if (booking == null)
+            throw new KeyNotFoundException($"Booking with ID {id} not found.");
+
+        _context.Bookings.Remove(booking);
+        await _context.SaveChangesAsync(cancellationToken);
+    }
+
 }

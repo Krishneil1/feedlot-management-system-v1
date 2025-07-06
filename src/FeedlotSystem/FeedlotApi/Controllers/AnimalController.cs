@@ -115,4 +115,28 @@ public class AnimalController : ControllerBase
             return StatusCode(500, "An error occurred while creating the animal.");
         }
     }
+    [HttpDelete("{id:int}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> DeleteAnimal(int id)
+    {
+        try
+        {
+            await _mediator.Send(new DeleteAnimalCommand(id));
+            _logger.LogInformation("Deleted animal with ID {AnimalId}", id);
+            return NoContent();
+        }
+        catch (KeyNotFoundException)
+        {
+            _logger.LogWarning("Animal with ID {AnimalId} not found", id);
+            return NotFound();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error deleting animal with ID {AnimalId}", id);
+            return StatusCode(500, "An error occurred while deleting the animal.");
+        }
+    }
+
 }

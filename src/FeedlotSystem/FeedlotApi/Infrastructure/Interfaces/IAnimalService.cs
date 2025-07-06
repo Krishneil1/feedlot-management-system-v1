@@ -17,4 +17,6 @@ public interface IAnimalService
     Task<List<Animal>> GetAllAnimalsAsync(CancellationToken cancellationToken);
     Task<Animal> GetAnimalByIdAsync(int id, CancellationToken cancellationToken);
     Task UpdateAnimalAsync(int id, AnimalDto dto, CancellationToken cancellationToken);
+    Task DeleteAnimalAsync(int id, CancellationToken cancellationToken);
+
 }

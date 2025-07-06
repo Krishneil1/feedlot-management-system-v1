@@ -17,5 +17,5 @@ public interface IBookingService
     Task<List<Booking>> GetAllBookingsAsync(CancellationToken cancellationToken);
     Task<Booking> GetBookingByIdAsync(int id, CancellationToken cancellationToken);
     Task UpdateBookingAsync(int id, BookingDto dto, CancellationToken cancellationToken);
-
+    Task DeleteBookingAsync(int id, CancellationToken cancellationToken);
 }

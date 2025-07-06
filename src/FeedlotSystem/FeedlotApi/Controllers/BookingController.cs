@@ -114,4 +114,28 @@ public class BookingController : ControllerBase
             return StatusCode(500, "An error occurred while updating the booking.");
         }
     }
+
+    [HttpDelete("{id:int}")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> DeleteBooking(int id)
+    {
+        try
+        {
+            await _mediator.Send(new DeleteBookingCommand(id));
+            _logger.LogInformation("Deleted booking with ID {BookingId}", id);
+            return NoContent();
+        }
+        catch (KeyNotFoundException)
+        {
+            _logger.LogWarning("Booking with ID {BookingId} not found", id);
+            return NotFound();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error deleting booking with ID {BookingId}", id);
+            return StatusCode(500, "An error occurred while deleting the booking.");
+        }
+    }
 }
