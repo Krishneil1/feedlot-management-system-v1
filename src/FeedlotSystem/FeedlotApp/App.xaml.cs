@@ -1,28 +1,38 @@
-// -------------------------------------------------------------------------------------------------
-//
-// AnimalFormPage.xaml.cs -- The AnimalFormPage.xaml.cs class.
-//
-// Copyright (c) 2025 Krishneel Kumar. All rights reserved.
-//
-// -------------------------------------------------------------------------------------------------
+using FeedlotApp.Data;
+using FeedlotApp.Sync;
+using FeedlotApp.Views;
+using Microsoft.Maui.Networking;
 
-namespace FeedlotApp
+namespace FeedlotApp;
+
+public partial class App : Application
 {
-    using FeedlotApp.Data;
-    using FeedlotApp.Views;
+    public static FLDatabase FLDatabase { get; private set; }
 
-    public partial class App : Application
+    public App()
     {
-        public FLDatabase FLDatabase { get; private set; }
+        InitializeComponent();
 
-        public App()
+        string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "animal.db3");
+        FLDatabase = new FLDatabase(dbPath);
+
+        MainPage = new NavigationPage(new AnimalFormPage());
+
+        // 🔄 Sync on connectivity change
+        Connectivity.ConnectivityChanged += async (s, e) =>
         {
-            InitializeComponent();
-
-            string dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "animal.db3");
-            FLDatabase = new FLDatabase(dbPath);
-
-            MainPage = new NavigationPage(new AnimalFormPage());
-        }
+            if (Connectivity.Current.NetworkAccess == NetworkAccess.Internet)
+            {
+                try
+                {
+                    await new SyncService().SyncAnimalsAsync();
+                }
+                catch (Exception ex)
+                {
+                    // Optional: log or alert the user
+                    Console.WriteLine($"[Sync Error] {ex.Message}");
+                }
+            }
+        };
     }
 }

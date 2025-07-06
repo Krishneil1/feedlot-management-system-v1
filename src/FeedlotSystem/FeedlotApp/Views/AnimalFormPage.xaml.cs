@@ -27,7 +27,7 @@ public partial class AnimalFormPage : ContentPage
 
         await App.Current.MainPage.DisplayAlert("Saving", "Saving animal...", "OK");
 
-        await ((App)App.Current).FLDatabase.SaveAnimalAsync(animal);
+        await App.FLDatabase.SaveAnimalAsync(animal);
 
         await DisplayAlert("Saved", "Animal saved locally", "OK");
 

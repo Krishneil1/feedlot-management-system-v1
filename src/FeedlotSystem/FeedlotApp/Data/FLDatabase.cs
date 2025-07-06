@@ -17,7 +17,7 @@ public class FLDatabase
     public FLDatabase(string dbPath)
     {
         _database = new SQLiteAsyncConnection(dbPath);
-        InitializeAsync().Wait();
+        _ = InitializeAsync(); // fire and forget safely
     }
 
     private async Task InitializeAsync()
