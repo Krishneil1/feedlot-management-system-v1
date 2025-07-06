@@ -65,4 +65,8 @@ public class FLDatabase
 
     public Task<Booking?> GetBookingByIdAsync(int id) =>
         _database.Table<Booking>().FirstOrDefaultAsync(b => b.Id == id);
+
+    public Task<int> DeleteBookingAsync(Booking booking) =>
+    _database.DeleteAsync(booking);
+
 }

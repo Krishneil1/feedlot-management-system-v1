@@ -33,5 +33,22 @@ namespace FeedlotApp.Views
                 await Shell.Current.GoToAsync($"///BookingFormPage?bookingId={bookingId}");
             }
         }
+        private async void OnDeleteBookingClicked(object sender, EventArgs e)
+        {
+            if (sender is Button button && button.CommandParameter is int bookingId)
+            {
+                bool confirm = await DisplayAlert("Confirm Delete", "Are you sure you want to delete this booking?", "Yes", "No");
+                if (confirm)
+                {
+                    var booking = await App.FLDatabase.GetBookingByIdAsync(bookingId);
+                    if (booking != null)
+                    {
+                        await App.FLDatabase.DeleteBookingAsync(booking);
+                        await DisplayAlert("Deleted", "Booking deleted successfully.", "OK");
+                        LoadBookings(); // refresh the list
+                    }
+                }
+            }
+        }
     }
 }
