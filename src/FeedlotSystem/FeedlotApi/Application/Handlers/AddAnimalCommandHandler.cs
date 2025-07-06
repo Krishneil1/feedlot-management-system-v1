@@ -11,7 +11,7 @@ namespace FeedlotApi.Application.Handlers;
 using FeedlotApi.Application.Commands;
 using FeedlotApi.Domain.Entities;
 using MediatR;
-using FeedlotApi.Application.IAnimalService;
+using FeedlotApi.Infrastructure.Interfaces;
 
 public class AddAnimalCommandHandler : IRequestHandler<AddAnimalCommand, int>
 {

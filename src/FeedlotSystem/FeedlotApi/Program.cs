@@ -2,10 +2,10 @@
 // Program.cs -- The Program.cs class.
 // -------------------------------------------------------------------------------------------------
 
-using FeedlotApi.Application.IAnimalService;
 using FeedlotApi.Infrastructure.Services;
 using FeedlotApi.Data;
 using Microsoft.EntityFrameworkCore;
+using FeedlotApi.Infrastructure.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 // MediatR

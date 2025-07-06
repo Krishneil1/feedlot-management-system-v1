@@ -6,11 +6,13 @@
 //
 // -------------------------------------------------------------------------------------------------
 
-namespace FeedlotApi.Application.IAnimalService;
+namespace FeedlotApi.Infrastructure.Interfaces;
 
 using FeedlotApi.Domain.Entities;
 
 public interface IAnimalService
 {
     Task<int> AddAnimalAsync(Animal animal, CancellationToken cancellationToken);
+    Task<List<Animal>> GetAllAnimalsAsync(CancellationToken cancellationToken);
+
 }

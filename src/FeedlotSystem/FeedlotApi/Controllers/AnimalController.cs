@@ -8,7 +8,7 @@
 
 namespace FeedlotApi.Controllers;
 using FeedlotApi.Application.Commands;
-
+using FeedlotApi.Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,6 +21,13 @@ public class AnimalController : ControllerBase
     public AnimalController(IMediator mediator)
     {
         _mediator = mediator;
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAllAnimals()
+    {
+        var result = await _mediator.Send(new GetAllAnimalsQuery());
+        return Ok(result);
     }
 
     [HttpPost]

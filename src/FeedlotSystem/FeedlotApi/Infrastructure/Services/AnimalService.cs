@@ -8,9 +8,10 @@
 
 namespace FeedlotApi.Infrastructure.Services;
 
-using FeedlotApi.Application.IAnimalService;
-using FeedlotApi.Domain.Entities;
 using FeedlotApi.Data;
+using FeedlotApi.Domain.Entities;
+using FeedlotApi.Infrastructure.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 public class AnimalService : IAnimalService
 {
@@ -26,5 +27,9 @@ public class AnimalService : IAnimalService
         _context.Animals.Add(animal);
         await _context.SaveChangesAsync(cancellationToken);
         return animal.Id;
+    }
+    public async Task<List<Animal>> GetAllAnimalsAsync(CancellationToken cancellationToken)
+    {
+        return await _context.Animals.ToListAsync(cancellationToken);
     }
 }
