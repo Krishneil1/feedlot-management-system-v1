@@ -34,6 +34,7 @@ public class FLDatabase
         }
     }
 
+    // Animal Methods
     public Task<List<Animal>> GetAllAnimalsAsync() =>
         _database.Table<Animal>().ToListAsync();
 
@@ -49,14 +50,19 @@ public class FLDatabase
     public Task<int> DeleteAnimalAsync(Animal animal) =>
         _database.DeleteAsync(animal);
 
+    // Booking Methods
     public Task<List<Booking>> GetAllBookingsAsync() =>
-    _database.Table<Booking>().ToListAsync();
+        _database.Table<Booking>().ToListAsync();
+
+    public Task<List<Booking>> GetUnsyncedBookingsAsync() =>
+        _database.Table<Booking>().Where(b => !b.Synced).ToListAsync();
 
     public Task<int> SaveBookingAsync(Booking booking) =>
         _database.InsertAsync(booking);
-    public Task<List<Booking>> GetUnsyncedBookingsAsync() =>
-    _database.Table<Booking>().Where(b => !b.Synced).ToListAsync();
 
     public Task<int> UpdateBookingAsync(Booking booking) =>
         _database.UpdateAsync(booking);
+
+    public Task<Booking?> GetBookingByIdAsync(int id) =>
+        _database.Table<Booking>().FirstOrDefaultAsync(b => b.Id == id);
 }

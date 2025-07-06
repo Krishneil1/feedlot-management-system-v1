@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:FeedlotApp.Views"
     xmlns:sys="clr-namespace:System;assembly=netstandard"
-    FlyoutBehavior="Flyout"
+    Shell.FlyoutBehavior="Flyout"
     Shell.FlyoutIcon="menu.png"
     Shell.Title="FeedlotApp">
 
@@ -12,20 +12,21 @@
         <ShellContent ContentTemplate="{DataTemplate local:DashboardPage}" />
     </FlyoutItem>
 
-    <!-- Disabled visual only -->
-    <FlyoutItem Title="Add Bookings" Icon="booking.png" Route="BookingFormPage">
+    <FlyoutItem Title="Add Booking" Route="BookingFormPage">
+        <FlyoutItem.FlyoutIcon>
+            <FontImageSource Glyph="🅑" Size="20" />
+        </FlyoutItem.FlyoutIcon>
         <ShellContent ContentTemplate="{DataTemplate local:BookingFormPage}" />
     </FlyoutItem>
 
     <FlyoutItem Title="All Bookings" Route="BookingListPage">
         <FlyoutItem.FlyoutIcon>
-            <FontImageSource FontFamily="BootstrapIcons" Glyph="&#xf46c;" Color="Black" Size="22" />
+            <FontImageSource Glyph="🅐" Size="20" />
         </FlyoutItem.FlyoutIcon>
         <ShellContent ContentTemplate="{DataTemplate local:BookingListPage}" />
     </FlyoutItem>
+
     <FlyoutItem Title="Add Animals (Disabled)" Icon="animal_disabled.png">
         <ShellContent ContentTemplate="{DataTemplate local:ComingSoonPage}" />
     </FlyoutItem>
-
-
 </Shell>

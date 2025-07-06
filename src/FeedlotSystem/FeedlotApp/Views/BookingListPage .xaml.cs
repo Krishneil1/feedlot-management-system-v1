@@ -1,3 +1,7 @@
+// -------------------------------------------------------------------------------------------------
+// BookingListPage.xaml.cs -- The BookingListPage code-behind.
+// -------------------------------------------------------------------------------------------------
+
 using FeedlotApp.Models;
 
 namespace FeedlotApp.Views
@@ -14,6 +18,20 @@ namespace FeedlotApp.Views
         {
             var bookings = await App.FLDatabase.GetAllBookingsAsync();
             BookingCollectionView.ItemsSource = bookings;
+        }
+        private async void OnBookingSelected(object sender, SelectionChangedEventArgs e)
+        {
+            if (e.CurrentSelection.FirstOrDefault() is Booking selectedBooking)
+            {
+                await Shell.Current.GoToAsync($"///BookingFormPage?bookingId={selectedBooking.Id}");
+            }
+        }
+        private async void OnEditBookingClicked(object sender, EventArgs e)
+        {
+            if (sender is Button button && button.CommandParameter is int bookingId)
+            {
+                await Shell.Current.GoToAsync($"///BookingFormPage?bookingId={bookingId}");
+            }
         }
     }
 }
