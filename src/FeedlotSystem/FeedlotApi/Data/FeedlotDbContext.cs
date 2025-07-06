@@ -22,6 +22,8 @@ public class FeedlotDbContext : DbContext
 
     public DbSet<Animal> Animals => Set<Animal>();
 
+    public DbSet<Booking> Bookings => Set<Booking>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -47,6 +49,24 @@ public class FeedlotDbContext : DbContext
             entity.Property(a => a.Synced)
                   .HasDefaultValue(false);
         });
+        modelBuilder.Entity<Booking>(entity =>
+        {
+            entity.ToTable("Bookings");
+
+            entity.HasKey(b => b.Id);
+            entity.Property(b => b.BookingNumber).IsRequired().HasMaxLength(100);
+            entity.Property(b => b.VendorName).IsRequired().HasMaxLength(100);
+            entity.Property(b => b.Property).HasMaxLength(100);
+            entity.Property(b => b.TruckReg).HasMaxLength(50);
+            entity.Property(b => b.Status).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<Animal>()
+            .HasOne(a => a.Booking)
+            .WithMany(b => b.Animals)
+            .HasForeignKey(a => a.BookingId)
+            .OnDelete(DeleteBehavior.Cascade);
+
 
         // You can configure more entities here in the future
     }

@@ -1,20 +1,17 @@
 // -------------------------------------------------------------------------------------------------
 //
-// Animal.cs -- The Animal.cs class.
+// AnimalDto.cs -- The AnimalDto.cs class.
 //
 // Copyright (c) 2025 Krishneel Kumar. All rights reserved.
 //
 // -------------------------------------------------------------------------------------------------
 
-namespace FeedlotApi.Domain.Entities;
+namespace FeedlotApi.Domain.DTOs;
 
-public class Animal
+public class AnimalDto
 {
-    public int Id { get; set; }
     public string TagId { get; set; } = string.Empty;
     public string Breed { get; set; } = string.Empty;
     public DateTime DateOfBirth { get; set; }
-    public bool Synced { get; set; } // Optional in API
-    public int BookingId { get; set; }          // FK
-    public Booking Booking { get; set; } = null!;
 }
+

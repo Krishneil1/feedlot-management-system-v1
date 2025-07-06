@@ -2,10 +2,11 @@
 // Program.cs -- The Program.cs class.
 // -------------------------------------------------------------------------------------------------
 
-using FeedlotApi.Infrastructure.Services;
+using System.Reflection;
 using FeedlotApi.Data;
-using Microsoft.EntityFrameworkCore;
 using FeedlotApi.Infrastructure.Interfaces;
+using FeedlotApi.Infrastructure.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 // MediatR
@@ -15,8 +16,12 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Progr
 builder.Services.AddDbContext<FeedlotDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
+
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
 // Add services
 builder.Services.AddScoped<IAnimalService, AnimalService>();
+builder.Services.AddScoped<IBookingService, BookingService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
